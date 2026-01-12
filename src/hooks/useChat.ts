@@ -46,7 +46,7 @@ export const useChat = () => {
           setIsSearching(false);
         }
 
-        if (data.msg.includes("Waiting")) {
+        if (data.msg.includes("Waiting") || data.msg.includes("left")) {
           setIsConnected(false);
           setIsSearching(true);
         }

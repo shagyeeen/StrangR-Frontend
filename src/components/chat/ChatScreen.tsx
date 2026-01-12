@@ -129,7 +129,7 @@ export const ChatScreen = ({
                 exit={{ opacity: 0, y: -6 }}
                 className="max-w-[70%] mr-auto bg-white/12 text-white p-3 rounded-2xl mb-2.5 backdrop-blur-sm"
               >
-                <span className="text-sm italic opacity-75">Stranger is typing...</span>
+                <span className="text-sm italic opacity-75">StrangR user is typing...</span>
               </motion.div>
             )}
           </AnimatePresence>

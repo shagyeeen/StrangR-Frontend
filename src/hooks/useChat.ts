@@ -22,6 +22,7 @@ export const useChat = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -57,6 +58,10 @@ export const useChat = () => {
         if (data.msg.includes("Waiting") || data.msg.includes("left")) {
           setIsConnected(false);
           setIsSearching(true);
+          
+          if (data.msg.includes("left")) {
+            setShowFeedback(true);
+          }
         }
       }
 
@@ -165,6 +170,8 @@ export const useChat = () => {
     isSearching,
     isJoined,
     isTyping,
+    showFeedback,
+    setShowFeedback,
     join,
     sendMessage,
     nextStranger,

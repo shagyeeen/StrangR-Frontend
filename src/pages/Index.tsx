@@ -33,7 +33,7 @@ const Index = () => {
           <>
             {partner && (
               <div className="text-center text-sm text-white/70 mb-2 pt-4">
-                You are now chatting on <b>StrangR</b> with <b>{partner}</b>
+                You are now chatting with a <b>StrangR</b> - <b>{partner}</b>
               </div>
             )}
             <ChatScreen

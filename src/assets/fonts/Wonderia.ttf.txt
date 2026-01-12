@@ -1,0 +1,10 @@
+PLACEHOLDER FOR Wonderia.ttf
+
+You need to add the Wonderia.ttf font file here for the custom StrangR title font.
+
+Steps:
+1. Download Wonderia.ttf font file
+2. Replace this text file with the actual Wonderia.ttf
+3. The font will automatically load via CSS @font-face
+
+Font should be named exactly: Wonderia.ttf

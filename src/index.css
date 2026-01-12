@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Wonderia";
+  src: url("/src/assets/fonts/Wonderia.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -211,6 +218,14 @@
     inset: 0;
     background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.3), transparent);
     animation: shimmer 2s infinite;
+  }
+
+  /* StrangR title with Wonderia font */
+  .strangr-title {
+    font-family: "Wonderia", cursive;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(120,150,255,0.4);
   }
 
   /* Logo styling */

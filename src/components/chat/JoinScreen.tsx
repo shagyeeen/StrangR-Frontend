@@ -34,7 +34,7 @@ export const JoinScreen = ({ onJoin }: JoinScreenProps) => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="logo-text text-4xl md:text-5xl mb-8"
+        className="strangr-title text-4xl md:text-5xl mb-8"
       >
         StrangR
       </motion.h1>

@@ -23,6 +23,7 @@ export const useChat = () => {
   const [isJoined, setIsJoined] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [partner, setPartner] = useState<string | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -58,6 +59,7 @@ export const useChat = () => {
         if (data.msg.includes("Waiting") || data.msg.includes("left")) {
           setIsConnected(false);
           setIsSearching(true);
+          setPartner(null);
           
           if (data.msg.includes("left")) {
             setShowFeedback(true);
@@ -81,6 +83,10 @@ export const useChat = () => {
         sound.play().catch(() => {});
         navigator.vibrate?.(15);
       }
+    });
+
+    socket.on("partner", (data: { username: string }) => {
+      setPartner(data.username);
     });
 
     socket.on("typing", () => {
@@ -112,8 +118,9 @@ export const useChat = () => {
     setIsJoined(true);
     setIsSearching(true);
     setIsConnected(false);
+    setPartner(null);
 
-    socketRef.current?.emit("join");
+    socketRef.current?.emit("join", name);
   }, []);
 
   const sendMessage = useCallback(
@@ -130,6 +137,7 @@ export const useChat = () => {
     setMessages([]);
     setIsConnected(false);
     setIsSearching(true);
+    setPartner(null);
 
     socketRef.current?.emit("next");
   }, []);
@@ -172,6 +180,7 @@ export const useChat = () => {
     isTyping,
     showFeedback,
     setShowFeedback,
+    partner,
     join,
     sendMessage,
     nextStranger,

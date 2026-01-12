@@ -14,6 +14,7 @@ const Index = () => {
     isTyping,
     showFeedback,
     setShowFeedback,
+    partner,
     join,
     sendMessage,
     nextStranger,
@@ -29,20 +30,27 @@ const Index = () => {
         {!isJoined ? (
           <JoinScreen key="join" onJoin={join} />
         ) : (
-          <ChatScreen
-            key="chat"
-            username={username}
-            messages={messages}
-            isConnected={isConnected}
-            isSearching={isSearching}
-            isTyping={isTyping}
-            onSendMessage={sendMessage}
-            onNext={nextStranger}
-            onReport={report}
-            onDisconnect={disconnect}
-            onTyping={handleTyping}
-            onStopTyping={handleStopTyping}
-          />
+          <>
+            {partner && (
+              <div className="text-center text-sm text-white/70 mb-2 pt-4">
+                You are now chatting on <b>StrangR</b> with <b>{partner}</b>
+              </div>
+            )}
+            <ChatScreen
+              key="chat"
+              username={username}
+              messages={messages}
+              isConnected={isConnected}
+              isSearching={isSearching}
+              isTyping={isTyping}
+              onSendMessage={sendMessage}
+              onNext={nextStranger}
+              onReport={report}
+              onDisconnect={disconnect}
+              onTyping={handleTyping}
+              onStopTyping={handleStopTyping}
+            />
+          </>
         )}
       </AnimatePresence>
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}

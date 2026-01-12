@@ -17,37 +17,42 @@ export const useChat = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+
   const socketRef = useRef<Socket | null>(null);
 
+  /* ================= SOCKET SETUP ================= */
+
   useEffect(() => {
-    socketRef.current = io(SOCKET_URL, {
+    const socket = io(SOCKET_URL, {
       autoConnect: true,
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
     });
 
-    const socket = socketRef.current;
+    socketRef.current = socket;
 
     socket.on("message", (data: { username: string; msg: string }) => {
       const isSystem = data.username === "StrangR";
-      
-      // Update connection state based on system messages
+
+      // Handle system state
       if (isSystem) {
-        if (data.msg.includes("chatting") || data.msg.includes("connected")) {
+        if (data.msg.includes("chatting")) {
           setIsConnected(true);
           setIsSearching(false);
         }
-        if (data.msg.includes("Waiting") || data.msg.includes("disconnected") || data.msg.includes("left")) {
+
+        if (data.msg.includes("Waiting")) {
           setIsConnected(false);
           setIsSearching(true);
         }
       }
 
+      // Add message ONLY from server
       setMessages((prev) => [
         ...prev,
         {
-          id: `${Date.now()}-${Math.random()}`,
+          id: crypto.randomUUID(),
           username: data.username,
           msg: data.msg,
           isSystem,
@@ -57,8 +62,8 @@ export const useChat = () => {
 
     socket.on("connect_error", () => {
       toast({
-        title: "Connection Error",
-        description: "Failed to connect to server. Retrying...",
+        title: "Connection error",
+        description: "Reconnecting to StrangR…",
         variant: "destructive",
       });
     });
@@ -68,53 +73,54 @@ export const useChat = () => {
     };
   }, []);
 
+  /* ================= ACTIONS ================= */
+
   const join = useCallback((name: string) => {
     setUsername(name);
     setMessages([]);
     setIsJoined(true);
     setIsSearching(true);
+    setIsConnected(false);
+
     socketRef.current?.emit("join");
   }, []);
 
-  const sendMessage = useCallback((msg: string) => {
-    if (!isConnected || !msg.trim()) return;
-    
-    socketRef.current?.emit("message", { username, msg });
-    
-    // Optimistically add own message
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: `${Date.now()}-${Math.random()}`,
-        username,
-        msg,
-        isSystem: false,
-      },
-    ]);
-  }, [isConnected, username]);
+  const sendMessage = useCallback(
+    (msg: string) => {
+      if (!isConnected || !msg.trim()) return;
+
+      // ❗ DO NOT add message locally
+      socketRef.current?.emit("message", { username, msg });
+    },
+    [isConnected, username]
+  );
 
   const nextStranger = useCallback(() => {
     setMessages([]);
     setIsConnected(false);
     setIsSearching(true);
+
     socketRef.current?.emit("next");
   }, []);
 
   const report = useCallback(() => {
     toast({
-      title: "Report Submitted",
-      description: "Thank you for helping keep StrangR safe.",
+      title: "Report submitted",
+      description: "Thanks for keeping StrangR safe.",
     });
   }, []);
 
   const disconnect = useCallback(() => {
+    setUsername("");
+    setMessages([]);
     setIsJoined(false);
     setIsConnected(false);
     setIsSearching(false);
-    setMessages([]);
-    setUsername("");
-    socketRef.current?.emit("leave");
+
+    socketRef.current?.disconnect();
   }, []);
+
+  /* ================= EXPORT ================= */
 
   return {
     username,

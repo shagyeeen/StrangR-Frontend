@@ -4,6 +4,10 @@ import { toast } from "@/hooks/use-toast";
 
 const SOCKET_URL = "https://strangr-backend-5gbp.onrender.com";
 
+// Audio setup
+const connectedSound = new Audio("/sounds/connected.mp3");
+connectedSound.volume = 0.7;
+
 interface Message {
   id: string;
   username: string;
@@ -44,6 +48,10 @@ export const useChat = () => {
         if (data.msg.includes("chatting")) {
           setIsConnected(true);
           setIsSearching(false);
+
+          // 🔊 play connect sound
+          connectedSound.currentTime = 0;
+          connectedSound.play().catch(() => {});
         }
 
         if (data.msg.includes("Waiting") || data.msg.includes("left")) {

@@ -1,0 +1,15 @@
+PLACEHOLDER FOR connected.mp3
+
+You need to add a connected.mp3 audio file here for the connection sound to work.
+
+Recommended:
+- Pleasant connection chime (1-2 seconds)
+- Celebratory or welcoming tone
+- Medium volume, not jarring
+
+Suggested sounds:
+- Success notification chime
+- Gentle bell or ding
+- Positive UI sound effect
+
+Once you have the audio file, rename it to "connected.mp3" and replace this text file.

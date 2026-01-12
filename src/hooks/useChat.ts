@@ -144,10 +144,10 @@ export const useChat = () => {
 
   const report = useCallback(() => {
     socketRef.current?.emit("report");
-    
+
     toast({
-      title: "User reported",
-      description: "User has been temporarily banned.",
+      title: "User Reported",
+      description: "Thank you for helping keep StrangR safe.",
     });
   }, []);
 

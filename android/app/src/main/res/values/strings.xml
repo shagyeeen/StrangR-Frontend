@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">StrangR</string>
+    <string name="title_activity_main">StrangR</string>
+    <string name="package_name">com.shyne.strangr</string>
+    <string name="custom_url_scheme">com.shyne.strangr</string>
+</resources>

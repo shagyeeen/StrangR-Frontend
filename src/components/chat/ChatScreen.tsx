@@ -18,10 +18,13 @@ interface ChatScreenProps {
   messages: Message[];
   isConnected: boolean;
   isSearching: boolean;
+  isTyping: boolean;
   onSendMessage: (message: string) => void;
   onNext: () => void;
   onReport: () => void;
   onDisconnect: () => void;
+  onTyping: () => void;
+  onStopTyping: () => void;
 }
 
 export const ChatScreen = ({
@@ -29,13 +32,17 @@ export const ChatScreen = ({
   messages,
   isConnected,
   isSearching,
+  isTyping,
   onSendMessage,
   onNext,
   onReport,
   onDisconnect,
+  onTyping,
+  onStopTyping,
 }: ChatScreenProps) => {
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,10 +52,31 @@ export const ChatScreen = ({
     scrollToBottom();
   }, [messages]);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    
+    if (isConnected) {
+      onTyping();
+      
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+      
+      typingTimeoutRef.current = setTimeout(() => {
+        onStopTyping();
+      }, 1000);
+    }
+  };
+
   const handleSend = () => {
     if (!inputValue.trim() || !isConnected) return;
     onSendMessage(inputValue.trim());
     setInputValue("");
+    onStopTyping();
+    
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -94,6 +122,16 @@ export const ChatScreen = ({
                 />
               ))
             )}
+            {isTyping && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                className="max-w-[70%] mr-auto bg-white/12 text-white p-3 rounded-2xl mb-2.5 backdrop-blur-sm"
+              >
+                <span className="text-sm italic opacity-75">Stranger is typing...</span>
+              </motion.div>
+            )}
           </AnimatePresence>
           <div ref={messagesEndRef} />
         </div>
@@ -117,7 +155,7 @@ export const ChatScreen = ({
             <GlassInput
               placeholder={isConnected ? "Type a message..." : "Waiting for connection..."}
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               disabled={!isConnected}
               className="flex-1"

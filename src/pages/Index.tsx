@@ -10,11 +10,14 @@ const Index = () => {
     isConnected,
     isSearching,
     isJoined,
+    isTyping,
     join,
     sendMessage,
     nextStranger,
     report,
     disconnect,
+    handleTyping,
+    handleStopTyping,
   } = useChat();
 
   return (
@@ -28,10 +31,13 @@ const Index = () => {
           messages={messages}
           isConnected={isConnected}
           isSearching={isSearching}
+          isTyping={isTyping}
           onSendMessage={sendMessage}
           onNext={nextStranger}
           onReport={report}
           onDisconnect={disconnect}
+          onTyping={handleTyping}
+          onStopTyping={handleStopTyping}
         />
       )}
     </AnimatePresence>

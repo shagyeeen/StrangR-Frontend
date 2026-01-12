@@ -17,6 +17,7 @@ export const useChat = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -31,6 +32,9 @@ export const useChat = () => {
     });
 
     socketRef.current = socket;
+
+    // Sound setup
+    const sound = new Audio("/message.mp3");
 
     socket.on("message", (data: { username: string; msg: string }) => {
       const isSystem = data.username === "StrangR";
@@ -58,6 +62,20 @@ export const useChat = () => {
           isSystem,
         },
       ]);
+
+      // Play sound and vibrate for non-self messages
+      if (data.username !== username && !isSystem) {
+        sound.play().catch(() => {});
+        navigator.vibrate?.(15);
+      }
+    });
+
+    socket.on("typing", () => {
+      setIsTyping(true);
+    });
+
+    socket.on("stop_typing", () => {
+      setIsTyping(false);
     });
 
     socket.on("connect_error", () => {
@@ -103,10 +121,20 @@ export const useChat = () => {
     socketRef.current?.emit("next");
   }, []);
 
+  const handleTyping = useCallback(() => {
+    socketRef.current?.emit("typing");
+  }, []);
+
+  const handleStopTyping = useCallback(() => {
+    socketRef.current?.emit("stop_typing");
+  }, []);
+
   const report = useCallback(() => {
+    socketRef.current?.emit("report");
+    
     toast({
-      title: "Report submitted",
-      description: "Thanks for keeping StrangR safe.",
+      title: "User reported",
+      description: "User has been temporarily banned.",
     });
   }, []);
 
@@ -128,10 +156,13 @@ export const useChat = () => {
     isConnected,
     isSearching,
     isJoined,
+    isTyping,
     join,
     sendMessage,
     nextStranger,
     report,
     disconnect,
+    handleTyping,
+    handleStopTyping,
   };
 };

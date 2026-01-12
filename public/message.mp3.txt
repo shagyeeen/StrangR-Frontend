@@ -1,0 +1,15 @@
+PLACEHOLDER FOR message.mp3
+
+You need to add a message.mp3 audio file here for the sound notifications to work.
+
+Recommended:
+- Short notification sound (0.5-1 second)
+- Subtle, pleasant tone
+- Low file size for web performance
+
+You can find free notification sounds at:
+- freesound.org
+- zapsplat.com
+- Or record your own
+
+Once you have the audio file, rename it to "message.mp3" and replace this text file.

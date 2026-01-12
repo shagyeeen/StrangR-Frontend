@@ -5,6 +5,44 @@
   font-style: normal;
 }
 
+/* ===== StrangR Gradient Neon Text ===== */
+
+.strangr-neon {
+  font-family: "Wonderia", cursive;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: 0.25em;
+
+  /* Gradient text */
+  background: linear-gradient(
+    90deg,
+    #7cf7ff,
+    #8b5cf6,
+    #ec4899,
+    #7cf7ff
+  );
+  background-size: 300% 300%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Glass neon glow */
+  text-shadow:
+    0 0 8px rgba(124, 247, 255, 0.45),
+    0 0 18px rgba(139, 92, 246, 0.35),
+    0 0 28px rgba(236, 72, 153, 0.25);
+
+  animation: strangrGlow 6s ease infinite;
+}
+
+/* ===== Animation ===== */
+@keyframes strangrGlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -94,7 +94,7 @@ export const ChatScreen = ({
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center justify-between mb-4 max-w-[480px] mx-auto w-full"
       >
-        <h1 className="strangr-title text-2xl">StrangR</h1>
+        <h1 className="strangr-neon select-none text-2xl">StrangR</h1>
         <GlassButton
           variant="ghost"
           onClick={onDisconnect}

@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 APP WRAPPER */
+.app {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+/* LOGO */
+.logo {
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+/* 🧊 GLASS CARD */
+.card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+/* PRIMARY BUTTON */
+button {
+  width: 100%;
+  background: linear-gradient(135deg, #5f9cff, #7b61ff);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* CHAT AREA */
+#messages {
+  height: 45vh;              /* 🔥 dynamic height */
+  max-height: 360px;
+  overflow-y: auto;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+/* MESSAGE */
+#messages div {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* INPUT ROW */
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input-row input {
+  flex: 1;
+  margin: 0;
+}
+
+.input-row button {
+  width: auto;
+  padding: 0 18px;
+}
+
+/* ACTION BUTTONS */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ghost {
+  background: rgba(255,255,255,0.12);
+}
+
+.danger {
+  color: #ff6b6b;
+}
+
+/* 📱 MOBILE FULLSCREEN MODE */
+@media (max-width: 600px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .app {
+    max-width: 100%;
+    padding: 14px;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  #messages {
+    height: 55vh;   /* 👈 fills screen nicely */
+  }
+}

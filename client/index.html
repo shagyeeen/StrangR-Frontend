@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StrangR</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <h1 class="logo">StrangR</h1>
+
+    <div id="join" class="card">
+      <input id="username" placeholder="Enter username">
+      <button onclick="start()">Start Chat</button>
+    </div>
+
+    <div id="chat" class="card" style="display:none;">
+      <div id="messages"></div>
+
+      <div class="input-row">
+        <input id="msg" placeholder="Type message">
+        <button onclick="send()">Send</button>
+      </div>
+
+      <div class="actions">
+        <button class="ghost" onclick="nextStranger()">Next</button>
+        <button class="ghost danger" onclick="report()">Report</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

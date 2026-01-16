@@ -160,10 +160,44 @@
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-radial-bg);
     min-height: 100vh;
+    overflow-x: hidden;
+
+    background: linear-gradient(
+      120deg,
+      hsl(220 25% 8%),
+      hsl(250 60% 12%),
+      hsl(220 25% 8%)
+    );
+    background-size: 300% 300%;
+    animation: gradientFlow 14s ease infinite;
+    position: relative;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    z-index: -1;
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsl(217 91% 65% / 0.12),
+      transparent 60%
+    );
+    animation: floatWave 22s linear infinite;
+  }
+
+  body::after {
+    background: radial-gradient(
+      circle at 70% 70%,
+      hsl(195 90% 55% / 0.10),
+      transparent 65%
+    );
+    animation-duration: 32s;
   }
 }
+
 
 @layer components {
   /* Glass Card Component */
@@ -329,4 +363,15 @@
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
   }
+}
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatWave {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(60px, -60px); }
+  100% { transform: translate(0, 0); }
 }
